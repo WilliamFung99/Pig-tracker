@@ -1,0 +1,21 @@
+#pigForm{
+    border: 2px solid black;
+    width: 450px;
+    height: 850px;
+    position: fixed;
+    left: 770px;
+    bottom: 100px;
+    background-color: aliceblue;
+}
+
+h1{
+    text-align: center;
+}
+
+#Exit{
+    float:right;
+}
+
+#locationSelect{
+    margin-left: 5px;
+}
