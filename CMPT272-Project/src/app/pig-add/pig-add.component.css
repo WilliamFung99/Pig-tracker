@@ -3,9 +3,10 @@
     width: 450px;
     height: 850px;
     position: fixed;
-    left: 770px;
-    bottom: 100px;
+    left: 40%;
+    bottom:50px;
     background-color: aliceblue;
+    z-index: 1000;
 }
 
 h1{
@@ -18,4 +19,10 @@ h1{
 
 #locationSelect{
     margin-left: 5px;
+}
+
+#mapid{
+    width: 500px;
+    height: 500px;
+    position: absolute;
 }
