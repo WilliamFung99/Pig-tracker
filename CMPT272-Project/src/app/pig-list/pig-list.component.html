@@ -10,18 +10,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
+
+      <tr *ngFor= "let pig of pigs[0]" >
+        <td>{{pig.data.locationSelector}} </td>
+        <td>{{pig.data.name}}</td>
+        <td>{{pig.data.timeStamp | date:'MMM d, yyyy (hh:mm a)'}} </td>
+        <td>{{pig.data.status}}</td>
+        <td><a href = #> More Info </a></td>
+        <td> <button (click) = "onDelete(pig.key)" type="button" class="btn btn-danger">X</button> </td>
       </tr>
     </tbody>
+
 </table>
 

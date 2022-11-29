@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PigServiceService } from '../pig-service.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-pig-add',
@@ -13,7 +14,7 @@ export class PigAddComponent implements OnInit {
   customLocation = false;
   form: FormGroup
 
-  constructor(private ps: PigServiceService) {
+  constructor(private ps: PigServiceService, private router: Router) {
     let formControls = {
       reporterName: new FormControl(''),
       reporterNumber: new FormControl(''),
@@ -53,5 +54,6 @@ export class PigAddComponent implements OnInit {
     console.log("values", values)
     this.ps.add(values)
     this.pigReportDisplay = false;
+    this.router.navigate(["/"])
   }
 }

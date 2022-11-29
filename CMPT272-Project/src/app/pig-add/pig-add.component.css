@@ -3,10 +3,11 @@
     width: 450px;
     height: 850px;
     position: fixed;
-    left: 40%;
+    left: 40vw;
     bottom:50px;
     background-color: aliceblue;
     z-index: 1000;
+
 }
 
 h1{

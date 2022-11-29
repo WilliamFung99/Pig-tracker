@@ -6,12 +6,14 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { AppComponent } from './app.component';
 import { PigAddComponent } from './pig-add/pig-add.component';
 import { PigListComponent } from './pig-list/pig-list.component';
+import { PigComponent } from './pig/pig.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PigAddComponent,
     PigListComponent,
+    PigComponent,
   ],
   imports: [
     BrowserModule,
