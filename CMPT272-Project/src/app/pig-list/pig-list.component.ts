@@ -17,6 +17,7 @@ export class PigListComponent implements OnInit {
   ngOnInit() {
     this.ps.getData().subscribe((data:any )=>{
       this.pigs.push(data)
+      
     }) 
   }
 

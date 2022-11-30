@@ -49,8 +49,11 @@ export class PigComponent implements OnInit {
     if(password === "OINK!!"){
       this.ps.delete(this.id)
       this.ngOnInit()
+
       this.router.navigate(['/'])
       this.router.navigate(['/'])
+        .then(() => {window.location.reload()});
+        
     }else if(password == null){
       alert("Prompt cancelled")
     }
