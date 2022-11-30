@@ -30,6 +30,9 @@
         <div class="form-group">
             <label>PigID </label>
             <input type="number" class="form-control" formControlName ="PID" placeholder= "Ex: 0">
+            <div *ngIf = "failID">
+                <p id = "failID"> Pig ID is invalid</p>
+            </div>
         </div>
 
         <div id = "predeterminedLocation">
@@ -41,6 +44,9 @@
 
                 <option value = "AddNewLocation">Add New Location</option>
             </select>
+            <div *ngIf = "failLocationSelector">
+                <p id = "failLocationSelector"> Invalid location</p>
+            </div>
         </div>
 
         <div *ngIf = "customLocation"> 
@@ -50,11 +56,11 @@
             </div>
             <div class="form-group">
                 <label>Latitude</label>
-                <input type="text" class="form-control" formControlName ="latitude" placeholder= "Ex: 49.2827">
+                <input type="number" class="form-control" formControlName ="latitude" placeholder= "Ex: 49.2827">
             </div>
             <div class="form-group">
                 <label>Longitude</label>
-                <input type="text" class="form-control" formControlName ="longitude" placeholder= "Ex: -123.1207">
+                <input type="number" class="form-control" formControlName ="longitude" placeholder= "Ex: -123.1207">
             </div>
         </div>
 

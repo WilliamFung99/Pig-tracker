@@ -1,7 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IfStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +8,8 @@ import { IfStmt } from '@angular/compiler';
 export class PigServiceService implements OnInit {
 
   private dataURL = 'https://272.selfip.net/apps/gWO8mxoXrn/collections/pigs/documents/'
+
+  private hashURL = 'https://api.hashify.net/hash/md5/hex?value='
 
   constructor(private http: HttpClient) {
   }
@@ -91,5 +92,9 @@ export class PigServiceService implements OnInit {
     this.http.delete(this.dataURL + del_person + '/' ).subscribe((data:any)=>{
       console.log(data)
     }) 
+  }
+
+  getHash(password:any): Observable<any>{
+    return this.http.get(this.hashURL + password)
   }
 }

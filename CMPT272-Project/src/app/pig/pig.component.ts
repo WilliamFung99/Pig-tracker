@@ -11,6 +11,8 @@ export class PigComponent implements OnInit {
   id:any
   pigs:any[] = []
   pig:any[] = []
+  hashedPassword:string = "84892b91ef3bf9d216bbc6e88d74a77c"
+  
   constructor(private ActivatedRoute: ActivatedRoute, private router: Router, private ps: PigServiceService) { }
 
   ngOnInit(): void {
@@ -24,6 +26,7 @@ export class PigComponent implements OnInit {
         }
       }
     }) 
+
   }
 
   back(){
@@ -32,34 +35,42 @@ export class PigComponent implements OnInit {
 
   changeStatus(){
     let password = prompt("You are changing the status of the pig. \n Please enter the password")
-    if(password === "OINK!!"){
-      this.ps.edit(this.id, this.pig)
-      this.ngOnInit()
-      this.router.navigate(['/'])
-    }else if(password == null){
-      alert("Prompt cancelled")
-    }
-    else{
-      alert("Incorrect password")
-    }
+
+    this.ps.getHash(password).subscribe((data:any) =>{
+      password = data.Digest
+      if(password == this.hashedPassword){
+        this.ps.edit(this.id, this.pig)
+        this.ngOnInit()
+        this.router.navigate(['/'])
+      }else if(password == null){
+        alert("Prompt cancelled")
+      }
+      else{
+        alert("Incorrect password")
+      }
+    })
   }
 
   deletePig(){
     let password = prompt("You are deleting a pig from the system. \n Please enter the password")
-    if(password === "OINK!!"){
-      this.ps.delete(this.id)
-      this.ngOnInit()
 
-      this.router.navigate(['/'])
-      this.router.navigate(['/'])
-        .then(() => {window.location.reload()});
-        
-    }else if(password == null){
-      alert("Prompt cancelled")
-    }
-    else{
-      alert("Incorrect password")
-    }
+    this.ps.getHash(password).subscribe((data:any) =>{
+      password = data.Digest
+      if(password == this.hashedPassword){
+        this.ps.delete(this.id)
+        this.ngOnInit()
+  
+        this.router.navigate(['/'])
+        this.router.navigate(['/'])
+          .then(() => {window.location.reload()});
+          
+      }else if(password == null){
+        alert("Prompt cancelled")
+      }
+      else{
+        alert("Incorrect password")
+      }
+    })
   }
 
 }
