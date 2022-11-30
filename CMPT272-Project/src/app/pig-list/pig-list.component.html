@@ -1,10 +1,22 @@
-<table class="table">
+<table id = "piglist" class="table">
     <thead class = "thead-dark">
       <tr>
-        <th scope="col" sortable = "location">Location</th>
-        <th scope="col" sortable = "reportedBy" >Reported By</th>
-        <th scope="col" sortable = "timeReported">Time Reported</th>
-        <th scope="col" sortable = "status">Status</th>
+        <th scope="col">
+          <button (click) = "sortByLocationAscending()" type="button" class="btn btn-light"> A->Z</button> <br>
+          <button (click) = "sortByLocationDescending()" type="button" class="btn btn-light"> Z->A</button> <br> 
+          Location</th>
+        <th scope="col" >
+          <button (click) = "sortByNameAscending()" type="button" class="btn btn-light"> A->Z</button> <br>
+          <button (click) = "sortByNameDescending()" type="button" class="btn btn-light"> Z->A</button> <br> 
+          Reported By</th>
+        <th scope="col" >
+          <button (click) = "sortByTimeAscending()" type="button" class="btn btn-light"> Early->Late</button> <br>
+          <button (click) = "sortByTimeDescending()" type="button" class="btn btn-light"> Late->Early</button> <br> 
+          Time Reported</th>
+        <th scope="col" >
+          <button (click) = "sortByStatusAscending()" type="button" class="btn btn-light"> Ready->Retrieved</button> <br>
+          <button (click) = "sortByStatusDescending()" type="button" class="btn btn-light"> Retrieved->Ready</button> <br> 
+          Status</th>
         <th scope="col">More Info</th>
         <th scope="col">Delete</th>
       </tr>

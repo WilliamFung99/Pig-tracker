@@ -17,7 +17,6 @@ export class PigListComponent implements OnInit {
   ngOnInit() {
     this.ps.getData().subscribe((data:any )=>{
       this.pigs.push(data)
-      
     }) 
   }
 
@@ -29,5 +28,66 @@ export class PigListComponent implements OnInit {
     this.router.navigate(["/info", ind])
   }
 
+  sortByLocationAscending(){
+    this.pigs[0].sort((a:any,b:any) =>{
+      if (a.data.location < b.data.location ) {return -1}
+      if (a.data.location > b.data.location ) {return 1}
+      return 0
+    })
+  }
+  sortByLocationDescending(){
+    this.pigs[0].sort((a:any,b:any) =>{
+      if (a.data.location > b.data.location ) {return -1}
+      if (a.data.location < b.data.location ) {return 1}
+      return 0
+    })
+  }
 
+  sortByNameAscending(){
+    this.pigs[0].sort((a:any,b:any) =>{
+      if (a.data.name < b.data.name ) {return -1}
+      if (a.data.name > b.data.name ) {return 1}
+      return 0
+    })
+  }
+
+  sortByNameDescending(){
+    this.pigs[0].sort((a:any,b:any) =>{
+      if (a.data.name > b.data.name ) {return -1}
+      if (a.data.name < b.data.name ) {return 1}
+      return 0
+    })
+  }
+
+  sortByTimeAscending(){
+    this.pigs[0].sort((a:any,b:any) =>{
+      if (a.data.timeStamp < b.data.timeStamp ) {return -1}
+      if (a.data.timeStamp > b.data.timeStamp ) {return 1}
+      return 0
+    })
+  }
+
+  sortByTimeDescending(){
+    this.pigs[0].sort((a:any,b:any) =>{
+      if (a.data.timeStamp > b.data.timeStamp ) {return -1}
+      if (a.data.timeStamp < b.data.timeStamp ) {return 1}
+      return 0
+    })
+  }
+
+  sortByStatusAscending(){
+    this.pigs[0].sort((a:any,b:any) =>{
+      if (a.data.status < b.data.status ) {return -1}
+      if (a.data.status > b.data.status ) {return 1}
+      return 0
+    })
+  }
+
+  sortByStatusDescending(){
+    this.pigs[0].sort((a:any,b:any) =>{
+      if (a.data.status > b.data.status ) {return -1}
+      if (a.data.status < b.data.status ) {return 1}
+      return 0
+    })
+  }
 }
