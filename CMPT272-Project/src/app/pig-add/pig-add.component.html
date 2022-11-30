@@ -1,3 +1,4 @@
+
 <link rel = "stylesheet" href = "pig-add.component.css">
 
 <button (click) = "displayForm()" id = "addNewPig" type="button" class="btn btn-primary btn-lg btn-block">CREATE PIG REPORT</button>
@@ -24,10 +25,11 @@
 
         <div id = "predeterminedLocation">
             <label>Choose a Location: </label>
-            <select (change) = "displayCustomLocation($event)" formControlName = "locationSelect" class="form-select" >
-                <option value = "Metrotown">Metrotown</option>
-                <option value = "SFUBurnaby">SFU Burnaby</option>
-                <option value = "SFUSurrey">SFU Surrey</option>
+            <select  (change) = "displayCustomLocation($event)" formControlName = "locationSelect" class="form-select" >
+                <option 
+                *ngFor = "let location of locations"  value = {{location}} > {{location}} 
+                </option>
+
                 <option value = "AddNewLocation">Add New Location</option>
             </select>
         </div>
@@ -38,12 +40,12 @@
                 <input type="text" class="form-control" formControlName ="location" placeholder= "Ex: SFU Burnaby">
             </div>
             <div class="form-group">
-                <label>Longitude</label>
-                <input type="text" class="form-control" formControlName ="longitude" placeholder= "Ex: 49.2827">
+                <label>Latitude</label>
+                <input type="text" class="form-control" formControlName ="latitude" placeholder= "Ex: 49.2827">
             </div>
             <div class="form-group">
-                <label>Latitude</label>
-                <input type="text" class="form-control" formControlName ="latitude" placeholder= "Ex: 123.1207">
+                <label>Longitude</label>
+                <input type="text" class="form-control" formControlName ="longitude" placeholder= "Ex: 123.1207">
             </div>
         </div>
 

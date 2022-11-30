@@ -1,4 +1,43 @@
 
+<h1> PIG INFORMATION </h1>
+<table class= "table" *ngFor= "let pig of pig">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Breed</th>
+            <th>Location Name</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Phone number</th>
+            <th>Status</th>
+            <th>Time Found</th>
+            <th>Extra Notes</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+          <th scope="row">{{id}}</th>
+          <td>{{pig.name}}</td>
+          <td>{{pig.breed}}</td>
+          <td>{{pig.location}}</td>
+          <td>{{pig.latitude}}</td>
+          <td>{{pig.longitude}}</td>
+          <td>{{pig.phone}}</td>
+          <td>{{pig.status}}</td>
+          <td>{{pig.timeStamp | date:'MMM d, yyyy (hh:mm a)'}}</td>
+          <td>{{pig.notes}}</td>
+        <tr>
+      </tbody>
+</table>
+
+<button (click) = "back()" type="button" class="btn btn-dark"> &#60; Back</button>
+
+<button id = "changeStatus" (click) = "changeStatus()" type="button" class="btn btn-warning"> Change pig status</button>
+
+<button id = "deletePig" (click) = "deletePig()" type="button" class="btn btn-danger"> Delete Pig</button>
+
 
 
 

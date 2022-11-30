@@ -1,4 +1,6 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PigServiceService } from '../pig-service.service';
 
 @Component({
   selector: 'app-pig',
@@ -6,14 +8,55 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
   styleUrls: ['./pig.component.css']
 })
 export class PigComponent implements OnInit {
-
-  @Input() pig:any
-  @Output() delete = new EventEmitter()
-
-  constructor() { }
+  id:any
+  pigs:any[] = []
+  pig:any[] = []
+  constructor(private ActivatedRoute: ActivatedRoute, private router: Router, private ps: PigServiceService) { }
 
   ngOnInit(): void {
-    console.log("pig",this.pig)
+    this.id = this.ActivatedRoute.snapshot.paramMap.get('PID')
+    this.ps.getData().subscribe((data:any )=>{
+      this.pigs.push(data)
+      for(const element of this.pigs[0]){
+        if (element.key == this.id){
+          this.pig.push(element.data)
+          console.log(this.pig)
+        }
+      }
+    }) 
+  }
+
+  back(){
+    this.router.navigate(['/'])
+  }
+
+  changeStatus(){
+    let password = prompt("You are changing the status of the pig. \n Please enter the password")
+    if(password === "OINK!!"){
+      this.ps.edit(this.id, this.pig)
+      this.ngOnInit()
+      this.router.navigate(['/'])
+    }else if(password == null){
+      alert("Prompt cancelled")
+    }
+    else{
+      alert("Incorrect password")
+    }
+  }
+
+  deletePig(){
+    let password = prompt("You are deleting a pig from the system. \n Please enter the password")
+    if(password === "OINK!!"){
+      this.ps.delete(this.id)
+      this.ngOnInit()
+      this.router.navigate(['/'])
+      this.router.navigate(['/'])
+    }else if(password == null){
+      alert("Prompt cancelled")
+    }
+    else{
+      alert("Incorrect password")
+    }
   }
 
 }

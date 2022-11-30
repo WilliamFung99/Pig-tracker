@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 
 // need to add to make leaflet icons work
 import { icon, Marker } from 'leaflet';
+import { PigServiceService } from './pig-service.service';
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon-2x.png';
 const shadowUrl = 'assets/marker-shadow.png';
@@ -26,9 +27,41 @@ Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
   private map:any;
+  pigs:any[] = []
+  locations:string[] = []
+  flexibleCounter:number = 0;
 
-  constructor() { 
+  constructor(private ps: PigServiceService) { 
+  }
+
+  ngOnInit() {
+    this.ps.getData().subscribe((data:any )=>{
+      this.pigs.push(data)
+      console.log(data)
+
+      for (const element of this.pigs[0]){
+        this.flexibleCounter = 0
+        
+        //Count by location
+        for (const elementNext of this.pigs[0]){
+          if(element.data.locationSelector == elementNext.data.locationSelector){
+            this.flexibleCounter++
+          }
+        }
+        L.marker([element.data.latitude, element.data.longitude]).addTo(this.map)
+        .bindPopup(element.data.locationSelector + "<br>" + this.flexibleCounter + " cases reported.").openPopup;
+        
+      }
+     
+    
+    })
+
+
+    
   }
 
   ngAfterViewInit(): void { 
@@ -36,21 +69,24 @@ export class AppComponent implements AfterViewInit {
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2lsbGlhbWZ1bmcxOTk5IiwiYSI6ImNsYXZvMndxaTA2NGozb3FubWxpbGV5cjYifQ.Wz6akch9mYN2_sSr48YnXQ', {
       maxZoom: 18,
+      minZoom: 2,
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       id: 'mapbox/streets-v11',
       tileSize: 512,
-      zoomOffset: -1
+      zoomOffset: -1,
+      bounds: [
+        [-90, -180],
+        [90, 180]
+      ],
+      noWrap: true
+      
     }).addTo(this.map);
 
-    L.marker([49.2276, -123.0076]).addTo(this.map)
-    .bindPopup("<b>Metrotown</b><br />cases reported.").openPopup();
+    
 
-    L.marker([49.1867, -122.8490]).addTo(this.map)
-    .bindPopup("<b>SFU Surrey</b><br />cases reported.").openPopup();
-
-    L.marker([49.2781, -122.9199]).addTo(this.map)
-    .bindPopup("<b>SFU Burnaby</b><br />cases reported.").openPopup();
   }
+
+
 
 }

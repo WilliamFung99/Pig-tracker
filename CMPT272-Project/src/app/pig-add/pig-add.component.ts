@@ -12,7 +12,13 @@ import { Router } from '@angular/router'
 export class PigAddComponent implements OnInit {
   pigReportDisplay = false;
   customLocation = false;
-  form: FormGroup
+  form: FormGroup;
+  pigs:any[] = [];
+  locations:any = [];
+  latitudes:any = [];
+  longitudes:any = [];
+
+  duplicateFound:boolean =  false;
 
   constructor(private ps: PigServiceService, private router: Router) {
     let formControls = {
@@ -31,6 +37,22 @@ export class PigAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.ps.getData().subscribe((data:any )=>{
+      this.pigs.push(data)
+      for (const element of data){
+        this.duplicateFound = false;
+        for (let i = 0 ; i < this.locations.length; i++){
+          if(element.data.locationSelector == this.locations[i]){
+            this.duplicateFound = true;
+          }
+        }
+        if(this.duplicateFound == false){
+          this.locations.push(element.data.locationSelector)
+          this.longitudes.push(element.data.longitude)
+          this.latitudes.push(element.data.latitude)
+        }
+      }
+    }) 
   }
 
   displayForm(){
@@ -52,8 +74,21 @@ export class PigAddComponent implements OnInit {
 
   onSubmit(values:any){
     console.log("values", values)
+    if(values.locationSelect == "AddNewLocation"){
+      values.locationSelect = values.location
+    }
+  
+    for (let i = 0 ; i < this.locations.length; i++){
+      if (values.locationSelect == this.locations[i]){
+        values.location = this.locations[i]
+        values.latitude = this.latitudes[i]
+        values.longitude = this.longitudes[i]
+      }
+    }
     this.ps.add(values)
+    this.ngOnInit()
     this.pigReportDisplay = false;
-    this.router.navigate(["/"])
+    window.location.reload();
+    window.location.reload();
   }
 }
