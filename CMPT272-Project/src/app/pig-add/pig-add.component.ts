@@ -12,6 +12,10 @@ import { Router } from '@angular/router'
 export class PigAddComponent implements OnInit {
   pigReportDisplay = false;
   customLocation = false;
+  failName = false;
+  failNumber = false;
+  failBreed = false;
+
   form: FormGroup;
   pigs:any[] = [];
   locations:any = [];
@@ -61,6 +65,7 @@ export class PigAddComponent implements OnInit {
 
   closeForm(){
     this.pigReportDisplay = false;
+    window.location.reload()
   }
 
   displayCustomLocation(event: any){
@@ -72,8 +77,40 @@ export class PigAddComponent implements OnInit {
     }
   }
 
+  failure(values:any):boolean{
+    let failureAmount = 0;
+    //Name missing
+    if(values.reporterName == ""){
+      this.failName = true;
+      failureAmount++;
+    }else{
+      this.failName = false;
+    }
+    //Number missing, cannot be negative, must have 10 digits
+    if(values.reporterNumber == "" || values.reporterNumber <= 0 || values.reporterNumber.toString().length != 10){
+      this.failNumber = true;
+      failureAmount++
+    }else{
+      this.failNumber = false;
+    }
+    //Breed missing
+    if(values.breed == ""){
+      this.failBreed = true;
+      failureAmount++;
+    }else{
+      this.failBreed = false;
+    }
+
+    if(failureAmount >= 1){
+      return true
+    }
+
+    //No failure
+    return false
+  }
+
   onSubmit(values:any){
-    console.log("values", values)
+    
     if(values.locationSelect == "AddNewLocation"){
       values.locationSelect = values.location
     }
@@ -84,6 +121,9 @@ export class PigAddComponent implements OnInit {
         values.latitude = this.latitudes[i]
         values.longitude = this.longitudes[i]
       }
+    }
+    if(this.failure(values)){
+      return
     }
     this.ps.add(values)
     this.ngOnInit()
