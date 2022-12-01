@@ -18,6 +18,13 @@ export class PigAddComponent implements OnInit {
   failID = false;
   failLocationSelector = false;
 
+  failRepeatLocationName = false;
+  failRepeatLatitudeLongitude = false;
+  failRepeatID = false;
+
+  failLatitudeRange = false;
+  failLongitudeRange = false;
+
   form: FormGroup;
   pigs:any[] = [];
   locations:any = [];
@@ -26,7 +33,7 @@ export class PigAddComponent implements OnInit {
 
   duplicateFound:boolean =  false;
 
-  constructor(private ps: PigServiceService, private router: Router) {
+  constructor(private ps: PigServiceService) {
     let formControls = {
       reporterName: new FormControl(''),
       reporterNumber: new FormControl(''),
@@ -91,7 +98,7 @@ export class PigAddComponent implements OnInit {
     //Number missing, cannot be negative, must have 10 digits
     if(values.reporterNumber == "" || values.reporterNumber <= 0 || values.reporterNumber.toString().length != 10){
       this.failNumber = true;
-      failureAmount++
+      failureAmount++;
     }else{
       this.failNumber = false;
     }
@@ -105,7 +112,7 @@ export class PigAddComponent implements OnInit {
     //Missing Id, Id >= 0, must be an integer
     if(values.PID ==  "" || values.PID <= 0 || parseInt(values.PID) != values.PID ){
       this.failID = true;
-      failureAmount++
+      failureAmount++;
     }else{
       this.failID = false;
     } 
@@ -114,11 +121,59 @@ export class PigAddComponent implements OnInit {
     if(values.locationSelect == "" || values.longitude == "" || values.latitude == "" || 
       (Number(values.latitude) != values.latitude) || Number(values.longitude) != values.longitude){
         this.failLocationSelector = true;
-        failureAmount++
+        failureAmount++;
     }else{
       this.failLocationSelector = false;
     }
 
+    //Max values for latitude and longitude
+    if(values.latitude > 180 || values.latitude < -180){
+      this.failLatitudeRange = true;
+      failureAmount++;
+    }else{
+      this.failLatitudeRange = false;
+    }
+
+    if(values.longitude > 180 || values.longitude < -180){
+      this.failLongitudeRange = true;
+      failureAmount++;
+    }else{
+      this.failLongitudeRange = false;
+    }
+
+
+    //Repeat LocationName from AddNewLocation
+    for (let i = 0; i < this.locations.length; i++){
+      if(values.location.toLowerCase() == this.locations[i].toLowerCase()){
+        this.failRepeatLocationName = true;
+        failureAmount++;
+        break;
+      }else{
+        this.failRepeatLocationName = false;
+      }
+    }
+    //Repeat LongitudeAndLatitude from AddNewLocation
+    for (let i = 0 ; i < this.latitudes.length; i++){
+      if (values.latitude == this.latitudes[i] && values.longitude == this.longitudes[i]){
+        this.failRepeatLatitudeLongitude = true;
+        failureAmount++
+        break;
+      }else{
+        this.failRepeatLatitudeLongitude = false;
+      }
+    }
+
+    //Repeat ID from database
+    for (let i = 0 ; i < this.pigs[0].length; i++){
+      if(values.PID == this.pigs[0][i].key){
+        this.failRepeatID = true;
+        failureAmount++
+        break
+      }else{
+        this.failRepeatID = false;
+      }
+    }
+    console.log("FAILURE NUMBER", failureAmount)
     if(failureAmount >= 1){
       return true
     }
@@ -140,11 +195,15 @@ export class PigAddComponent implements OnInit {
         values.longitude = this.longitudes[i]
       }
     }
+
+    if(values.extra == ""){
+      values.extra = "N/A"
+    }
     
     if(this.failure(values)){
       return
     }
-    console.log("submitting...")
+    
     this.ps.add(values)
     this.ngOnInit()
     this.pigReportDisplay = false;

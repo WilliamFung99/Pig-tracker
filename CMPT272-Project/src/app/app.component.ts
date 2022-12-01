@@ -55,9 +55,7 @@ export class AppComponent implements AfterViewInit {
         L.marker([element.data.latitude, element.data.longitude]).addTo(this.map)
         .bindPopup(element.data.locationSelector + "<br>" + this.flexibleCounter + " cases reported.").openPopup;
         
-      }
-     
-    
+      }    
     })
 
 

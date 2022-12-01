@@ -45,16 +45,16 @@ export class PigListComponent implements OnInit {
 
   sortByNameAscending(){
     this.pigs[0].sort((a:any,b:any) =>{
-      if (a.data.name < b.data.name ) {return -1}
-      if (a.data.name > b.data.name ) {return 1}
+      if (a.data.name > b.data.name ) {return -1}
+      if (a.data.name < b.data.name ) {return 1}
       return 0
     })
   }
 
   sortByNameDescending(){
     this.pigs[0].sort((a:any,b:any) =>{
-      if (a.data.name > b.data.name ) {return -1}
-      if (a.data.name < b.data.name ) {return 1}
+      if (a.data.name < b.data.name ) {return -1}
+      if (a.data.name > b.data.name ) {return 1}
       return 0
     })
   }

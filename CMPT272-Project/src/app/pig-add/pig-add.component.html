@@ -12,6 +12,7 @@
             <div *ngIf = "failName">
                 <p id = "failName"> Name cannot be empty</p>
             </div>
+            
         </div>
         <div class="form-group">
             <label>Phone Number</label>
@@ -33,6 +34,9 @@
             <div *ngIf = "failID">
                 <p id = "failID"> Pig ID is invalid</p>
             </div>
+            <div *ngIf = "failRepeatID">
+                <p id = "failRepeatID"> Pig ID already used and reported missing </p>
+            </div>
         </div>
 
         <div id = "predeterminedLocation">
@@ -47,20 +51,36 @@
             <div *ngIf = "failLocationSelector">
                 <p id = "failLocationSelector"> Invalid location</p>
             </div>
+            
         </div>
 
         <div *ngIf = "customLocation"> 
             <div class="form-group">
                 <label>Location Name</label>
                 <input type="text" class="form-control" formControlName ="location" placeholder= "Ex: SFU Burnaby">
+                <div *ngIf = "failRepeatLocationName">
+                    <p id = "failRepeatLocationName"> Please choose name from selection</p>
+                </div>
             </div>
             <div class="form-group">
                 <label>Latitude</label>
                 <input type="number" class="form-control" formControlName ="latitude" placeholder= "Ex: 49.2827">
             </div>
+
+            <div *ngIf = "failLatitudeRange">
+                <p id = "failLatitudeRange"> Coordinates out of bounds. <br> Please enter a number from -180 -> 180</p>
+            </div>
+
             <div class="form-group">
                 <label>Longitude</label>
                 <input type="number" class="form-control" formControlName ="longitude" placeholder= "Ex: -123.1207">
+            </div>
+
+            <div *ngIf = "failRepeatLatitudeLongitude">
+                <p id = "failRepeatLatitudeLongitude"> Coordinates already exist for a location</p>
+            </div>
+            <div *ngIf = "failLongitudeRange">
+                <p id = "failLongitudeRange"> Coordinates out of bounds. <br> Please enter a number from -180 -> 180</p>
             </div>
         </div>
 

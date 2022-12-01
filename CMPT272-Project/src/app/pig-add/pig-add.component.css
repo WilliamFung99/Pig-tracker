@@ -3,11 +3,11 @@
     width: 450px;
     height: 850px;
     position: fixed;
-    left: 40vw;
-    bottom:50px;
+    left: 38vw;
+    bottom:100px;
     background-color: aliceblue;
     z-index: 1000;
-    overflow: scroll;
+    overflow-y: scroll;
 
 }
 
@@ -29,6 +29,8 @@ h1{
     position: absolute;
 }
 
-#failName, #failNumber, #failBreed, #failID, #failLocationSelector{
+#failName, #failNumber, #failBreed, #failID, #failLocationSelector, 
+#failRepeatLocationName, #failRepeatLatitudeLongitude, #failRepeatID,
+#failLatitudeRange, #failLongitudeRange{
     color: red
 }
