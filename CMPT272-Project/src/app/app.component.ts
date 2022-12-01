@@ -41,7 +41,6 @@ export class AppComponent implements AfterViewInit {
   ngOnInit() {
     this.ps.getData().subscribe((data:any )=>{
       this.pigs.push(data)
-      console.log(data)
 
       for (const element of this.pigs[0]){
         this.flexibleCounter = 0

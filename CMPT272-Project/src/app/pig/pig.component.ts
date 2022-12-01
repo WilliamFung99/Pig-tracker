@@ -22,7 +22,6 @@ export class PigComponent implements OnInit {
       for(const element of this.pigs[0]){
         if (element.key == this.id){
           this.pig.push(element.data)
-          console.log(this.pig)
         }
       }
     }) 

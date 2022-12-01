@@ -79,7 +79,6 @@ export class PigAddComponent implements OnInit {
   }
 
   displayCustomLocation(event: any){
-    console.log(event.target.value)
     if(event.target.value == "AddNewLocation"){
       this.customLocation = true;
     }else{
@@ -175,7 +174,6 @@ export class PigAddComponent implements OnInit {
         this.failRepeatID = false;
       }
     }
-    console.log("FAILURE NUMBER", failureAmount)
     if(failureAmount >= 1){
       return true
     }
