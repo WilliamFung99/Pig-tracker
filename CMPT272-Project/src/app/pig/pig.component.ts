@@ -39,8 +39,12 @@ export class PigComponent implements OnInit {
       password = data.Digest
       if(password == this.hashedPassword){
         this.ps.edit(this.id, this.pig)
-        this.ngOnInit()
+       
         this.router.navigate(['/'])
+        this.router.navigate(['/'])
+          .then(() => {window.location.reload()});
+        this.router.navigate(['/'])
+
       }else if(password == null){
         alert("Prompt cancelled")
       }
@@ -57,11 +61,11 @@ export class PigComponent implements OnInit {
       password = data.Digest
       if(password == this.hashedPassword){
         this.ps.delete(this.id)
-        this.ngOnInit()
   
         this.router.navigate(['/'])
         this.router.navigate(['/'])
           .then(() => {window.location.reload()});
+        this.router.navigate(['/'])
           
       }else if(password == null){
         alert("Prompt cancelled")

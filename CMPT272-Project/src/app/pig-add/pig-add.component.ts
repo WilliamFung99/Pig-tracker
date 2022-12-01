@@ -118,7 +118,7 @@ export class PigAddComponent implements OnInit {
     } 
     //LocationSelector/location cannot be empty  
     //longitude/latitude cannot be empty AND must be a number
-    if(values.locationSelect == "" || values.longitude == "" || values.latitude == "" || 
+    if(values.locationSelect == "" || values.longitude === "" || values.latitude === "" || 
       Number(values.latitude) != values.latitude || Number(values.longitude) != values.longitude){
         this.failLocationSelector = true;
         failureAmount++;
@@ -208,7 +208,6 @@ export class PigAddComponent implements OnInit {
     }
     
     this.ps.add(values)
-    this.ngOnInit()
     this.pigReportDisplay = false;
     window.location.reload();
     window.location.reload();

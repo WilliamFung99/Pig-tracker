@@ -64,7 +64,7 @@ export class PigServiceService implements OnInit {
             "locationSelector": pig[0].locationSelector
         }
       }
-    }else{
+    }else if(pig[0].status == "RETRIEVED"){
       body = 
       {
         "key": edit_person,
