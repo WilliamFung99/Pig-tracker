@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { PigServiceService } from '../pig-service.service';
-import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-pig-add',
@@ -24,6 +23,8 @@ export class PigAddComponent implements OnInit {
 
   failLatitudeRange = false;
   failLongitudeRange = false;
+
+  isAddNewlocationPresent = false;
 
   form: FormGroup;
   pigs:any[] = [];
@@ -119,7 +120,7 @@ export class PigAddComponent implements OnInit {
     //LocationSelector/location cannot be empty  
     //longitude/latitude cannot be empty AND must be a number
     if(values.locationSelect == "" || values.longitude == "" || values.latitude == "" || 
-      (Number(values.latitude) != values.latitude) || Number(values.longitude) != values.longitude){
+      Number(values.latitude) != values.latitude || Number(values.longitude) != values.longitude){
         this.failLocationSelector = true;
         failureAmount++;
     }else{
@@ -133,7 +134,6 @@ export class PigAddComponent implements OnInit {
     }else{
       this.failLatitudeRange = false;
     }
-
     if(values.longitude > 180 || values.longitude < -180){
       this.failLongitudeRange = true;
       failureAmount++;
@@ -141,27 +141,29 @@ export class PigAddComponent implements OnInit {
       this.failLongitudeRange = false;
     }
 
+    if(this.isAddNewlocationPresent){
+      //Repeat LocationName from AddNewLocation
+      for (let i = 0; i < this.locations.length; i++){
+        if(values.location.toLowerCase() == this.locations[i].toLowerCase()){
+          this.failRepeatLocationName = true;
+          failureAmount++;
+          break;
+        }else{
+          this.failRepeatLocationName = false;
+        }
+      }
+      //Repeat LongitudeAndLatitude from AddNewLocation
+      for (let i = 0 ; i < this.latitudes.length; i++){
+        if (values.latitude == this.latitudes[i] && values.longitude == this.longitudes[i]){
+          this.failRepeatLatitudeLongitude = true;
+          failureAmount++
+          break;
+        }else{
+          this.failRepeatLatitudeLongitude = false;
+        }
+      }
+  }
 
-    //Repeat LocationName from AddNewLocation
-    for (let i = 0; i < this.locations.length; i++){
-      if(values.location.toLowerCase() == this.locations[i].toLowerCase()){
-        this.failRepeatLocationName = true;
-        failureAmount++;
-        break;
-      }else{
-        this.failRepeatLocationName = false;
-      }
-    }
-    //Repeat LongitudeAndLatitude from AddNewLocation
-    for (let i = 0 ; i < this.latitudes.length; i++){
-      if (values.latitude == this.latitudes[i] && values.longitude == this.longitudes[i]){
-        this.failRepeatLatitudeLongitude = true;
-        failureAmount++
-        break;
-      }else{
-        this.failRepeatLatitudeLongitude = false;
-      }
-    }
 
     //Repeat ID from database
     for (let i = 0 ; i < this.pigs[0].length; i++){
@@ -183,11 +185,14 @@ export class PigAddComponent implements OnInit {
   }
 
   onSubmit(values:any){
-
+    //Changing AddNewlocation to the location
     if(values.locationSelect == "AddNewLocation"){
       values.locationSelect = values.location
+      this.isAddNewlocationPresent = true
+    }else{
+      this.isAddNewlocationPresent = false
     }
-    
+    //Anything other than AddNewlocation we need to remember the location attributes
     for (let i = 0 ; i < this.locations.length; i++){
       if (values.locationSelect == this.locations[i]){
         values.location = this.locations[i]
